@@ -245,5 +245,3 @@ WORKDIR /
 EXPOSE 25 587 143 465 993 110 995 4190
 
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
-
-USER mailuser
