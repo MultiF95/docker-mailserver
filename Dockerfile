@@ -224,6 +224,10 @@ RUN sed -i -r "/^#?compress/c\compress\ncopytruncate" /etc/logrotate.conf && \
   # prevent email when /sbin/init or init system is not existing \
   sed -i -e 's/invoke-rc.d rsyslog rotate > \/dev\/null/invoke-rc.d rsyslog --quiet rotate > \/dev\/null/g' /etc/logrotate.d/rsyslog
 
+# Create user mailuser
+ENV USERDIR /home/mailuser
+RUN useradd mailuser -p consol -m
+
 # Get LetsEncrypt signed certificate
 RUN curl -s https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem > /etc/ssl/certs/lets-encrypt-x3-cross-signed.pem
 
@@ -241,3 +245,5 @@ WORKDIR /
 EXPOSE 25 587 143 465 993 110 995 4190
 
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+
+USER mailuser
